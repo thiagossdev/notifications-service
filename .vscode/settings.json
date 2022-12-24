@@ -8,7 +8,7 @@
   "window.zoomLevel": 0, // <== Zoom da tela
   "workbench.sideBar.location": "left", // <== Posição da barra lateral
   "workbench.iconTheme": "material-icon-theme", // <== Tema dos icones
-  // "workbench.colorTheme": "Dracula",
+  "workbench.colorTheme": "Min Dark",
   "glassit.alpha": 253,
   "workbench.productIconTheme": "fluent-icons",
   "workbench.tree.indent": 20,
