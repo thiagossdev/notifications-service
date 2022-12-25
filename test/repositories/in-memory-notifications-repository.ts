@@ -6,8 +6,10 @@ export class InMemoryNotificationsRepository
 {
   public notifications: Notification[] = [];
 
-  async findMany(): Promise<Notification[]> {
-    return this.notifications;
+  async findManyByRecipientId(recipientId: string): Promise<Notification[]> {
+    return this.notifications.filter(
+      (item) => item.recipientId === recipientId,
+    );
   }
 
   async findById(notificationId: string): Promise<Notification | null> {
@@ -37,10 +39,7 @@ export class InMemoryNotificationsRepository
   }
 
   async countManyByRecipientId(recipientId: string): Promise<number> {
-    const count = this.notifications.filter(
-      (item) => item.recipientId === recipientId,
-    ).length;
-
-    return count;
+    return this.notifications.filter((item) => item.recipientId === recipientId)
+      .length;
   }
 }
