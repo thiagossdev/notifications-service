@@ -11,6 +11,8 @@ describe('Notification', () => {
       content: 'Você recebeu uma solicitação de amizade',
       category: 'social',
     });
-    expect(notification).toBeTruthy();
+
+    expect(notificationsRepository.notifications).toHaveLength(1);
+    expect(notificationsRepository.notifications[0]).toEqual(notification);
   });
 });
