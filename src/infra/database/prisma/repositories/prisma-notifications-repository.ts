@@ -6,26 +6,54 @@ import { PrismaNotificationMapper } from '../mappers/prisma-notification-mapper'
 
 @Injectable()
 export class PrismaNotificationsRepository implements NotificationsRepository {
-  constructor(private prismaService: PrismaService) {}
+  constructor(private prisma: PrismaService) {}
 
-  async list(): Promise<Notification[]> {
-    throw new Error('Method not implemented.');
+  async findManyByRecipientId(recipientId: string): Promise<Notification[]> {
+    const notifications = await this.prisma.notification.findMany({
+      where: {
+        recipientId,
+      },
+    });
+
+    return notifications.map(PrismaNotificationMapper.toDomain);
   }
 
   async findById(notificationId: string): Promise<Notification | null> {
-    throw new Error('Method not implemented.');
+    const notification = await this.prisma.notification.findUnique({
+      where: { id: notificationId },
+    });
+
+    if (!notification) {
+      return null;
+    }
+
+    return PrismaNotificationMapper.toDomain(notification);
   }
 
   async create(notification: Notification): Promise<void> {
-    const prismaNotificationData =
-      PrismaNotificationMapper.toPrisma(notification);
+    const notificationData = PrismaNotificationMapper.toPrisma(notification);
 
-    await this.prismaService.notification.create({
-      data: prismaNotificationData,
+    await this.prisma.notification.create({
+      data: notificationData,
     });
   }
 
   async save(notification: Notification): Promise<void> {
-    throw new Error('Method not implemented.');
+    const notificationData = PrismaNotificationMapper.toPrisma(notification);
+
+    await this.prisma.notification.update({
+      where: {
+        id: notificationData.id,
+      },
+      data: notificationData,
+    });
+  }
+
+  async countManyByRecipientId(recipientId: string): Promise<number> {
+    return await this.prisma.notification.count({
+      where: {
+        recipientId,
+      },
+    });
   }
 }
