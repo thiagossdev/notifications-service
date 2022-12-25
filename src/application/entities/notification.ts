@@ -1,5 +1,5 @@
 import { randomUUID } from 'crypto';
-import { Replace } from 'src/core/Replace';
+import { Replace } from '@core/Replace';
 import { Content } from './content';
 
 export interface NotificationProps {
